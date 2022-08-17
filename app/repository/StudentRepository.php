@@ -34,9 +34,7 @@ class StudentRepository {
     public function findAll(int $limit) : array {
         try {
 
-            $stmt = $this->dbConn->prepare("SELECT id,name,age,gender FROM student LIMIT ?");
-            $stmt->execute([$limit]);
-    
+            $stmt = $this->dbConn->query("SELECT id,name,age,gender FROM student LIMIT $limit");
             $students = [];
             while($student = $stmt->fetch()) {
                 $students[] = new Student($student["id"], $student["name"], $student["age"], $student["gender"]);
@@ -67,7 +65,7 @@ class StudentRepository {
     public function update(Student $student) : Student {
 
         try {
-            $stmt = $this->dbConn->prepare("UPDATE student SET(name=?, age=?, gender=?) WHERE id=?");
+            $stmt = $this->dbConn->prepare("UPDATE student SET name=?, age=?, gender=? WHERE id=?");
             $stmt->execute([$student->name, $student->age, $student->gender, $student->id]);
 
             return $student;
