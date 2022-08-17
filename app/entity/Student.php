@@ -4,7 +4,8 @@ namespace Student\Management\Entity;
 
 class Student {
 
-    public int $id, $age;
+    public ?int $id;
+    public int $age;
     public string $name, $gender;
 
     public function __construct(int $id, string $name, int $age, string $gender)
