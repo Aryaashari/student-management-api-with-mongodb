@@ -12,15 +12,12 @@
     },
     "autoload": {
         "psr-4" : {
-            "Student\\Management\\App\\" : "app/app",
-            "Student\\Management\\Controller\\" : "app/controller",
-            "Student\\Management\\Middleware\\" : "app/middleware"
+            "Student\\Management\\" : "app"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Student\\Management\\App\\" : "test/app",
-            "Student\\Management\\Controller\\" : "test/controller"
+            "Student\\Management\\" : "test"
         }
     },
     "require-dev": {
