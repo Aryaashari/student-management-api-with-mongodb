@@ -26,7 +26,7 @@ class StudentRepository {
     
             return null;
 
-        } catch(\Exception $e) {
+        } catch(\Exception | \PDOException $e) {
             throw $e;
         }
     }
@@ -44,7 +44,7 @@ class StudentRepository {
     
             return $students;
 
-        } catch(\Exception $e) {
+        } catch(\Exception | \PDOException $e) {
             throw $e;
         }
 
@@ -58,7 +58,7 @@ class StudentRepository {
             $id = $this->dbConn->lastInsertId();
             $student->id = $id;
             return $student;
-        } catch(\Exception $e) {
+        } catch(\Exception | \PDOException $e) {
             throw $e;
         }
 
@@ -71,7 +71,7 @@ class StudentRepository {
             $stmt->execute([$student->name, $student->age, $student->gender, $student->id]);
 
             return $student;
-        } catch (\Exception $e) {
+        } catch (\Exception | \PDOException $e) {
             throw $e;
         }
 
@@ -85,9 +85,13 @@ class StudentRepository {
 
             return true;
 
-        } catch(\Exception $e) {
+        } catch(\Exception | \PDOException $e) {
             throw $e;
         }
+    }
+
+    public function deleteAllData() : void {
+        $this->dbConn->query("DELETE FROM student");
     }
 
 }

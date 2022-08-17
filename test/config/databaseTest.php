@@ -11,7 +11,7 @@ class databaseTest extends TestCase {
 
     public function testConnection() {
 
-        $db = Database::getConnection("production");
+        $db = Database::getConnection();
         $this->assertNotNull($db);
 
     }
