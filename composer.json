@@ -1,5 +1,5 @@
 {
-    "name": "aryaashari/e-commerce",
+    "name": "aryaashari/marketplace",
     "type": "project",
     "authors": [
         {
@@ -12,15 +12,15 @@
     },
     "autoload": {
         "psr-4" : {
-            "E-Commerce\\App\\" : "app/app",
-            "E-Commerce\\Controller\\" : "app/controller",
-            "E-Commerce\\Middleware\\" : "app/middleware"
+            "Marketplace\\App\\" : "app/app",
+            "Marketplace\\Controller\\" : "app/controller",
+            "Marketplace\\Middleware\\" : "app/middleware"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "E-Commerce\\App\\" : "test/app",
-            "E-Commerce\\Controller\\" : "test/controller"
+            "Marketplace\\App\\" : "test/app",
+            "Marketplace\\Controller\\" : "test/controller"
         }
     },
     "require-dev": {

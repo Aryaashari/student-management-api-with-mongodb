@@ -1,8 +1,8 @@
 <?php 
 
-namespace App;
+namespace MarketPlace\App;
 
-use Middleware\Middleware;
+use Marketplace\Middleware;
 
 class Router {
 
