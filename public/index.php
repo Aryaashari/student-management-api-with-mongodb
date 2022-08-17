@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__."/../vendor/autoload.php";
 
-use Marketplace\App\Router;
-use Marketplace\Controller\HomeController;
+use Student\Management\App\Router;
+use Student\Management\Controller\HomeController;
 
 Router::add("GET", "/", HomeController::class, 'index');
 

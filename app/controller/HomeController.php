@@ -1,8 +1,8 @@
 <?php 
 
-namespace Marketplace\Controller;
+namespace Student\Management\Controller;
 
-use Marketplace\App\View;
+use Student\Management\App\View;
 
 class HomeController {
 

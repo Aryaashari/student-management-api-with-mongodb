@@ -1,6 +1,6 @@
 <?php
 
-namespace Marketplace\App;
+namespace Student\Management\App;
 
 class View {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Marketplace\Middleware;
+namespace Student\Management\Middleware;
 
 interface Middleware {
     function boot():void;

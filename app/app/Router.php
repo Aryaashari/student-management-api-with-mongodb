@@ -1,8 +1,8 @@
 <?php 
 
-namespace Marketplace\App;
+namespace Student\Management\App;
 
-use Marketplace\Middleware;
+use Student\Management\Middleware;
 
 class Router {
 

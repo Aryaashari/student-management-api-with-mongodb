@@ -12,15 +12,15 @@
     },
     "autoload": {
         "psr-4" : {
-            "Marketplace\\App\\" : "app/app",
-            "Marketplace\\Controller\\" : "app/controller",
-            "Marketplace\\Middleware\\" : "app/middleware"
+            "Student\\Management\\App\\" : "app/app",
+            "Student\\Management\\Controller\\" : "app/controller",
+            "Student\\Management\\Middleware\\" : "app/middleware"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Marketplace\\App\\" : "test/app",
-            "Marketplace\\Controller\\" : "test/controller"
+            "Student\\Management\\App\\" : "test/app",
+            "Student\\Management\\Controller\\" : "test/controller"
         }
     },
     "require-dev": {
