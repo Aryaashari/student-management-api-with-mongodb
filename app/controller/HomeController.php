@@ -2,7 +2,7 @@
 
 namespace Marketplace\Controller;
 
-use MarketPlace\App\View;
+use Marketplace\App\View;
 
 class HomeController {
 

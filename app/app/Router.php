@@ -1,6 +1,6 @@
 <?php 
 
-namespace MarketPlace\App;
+namespace Marketplace\App;
 
 use Marketplace\Middleware;
 
@@ -26,7 +26,6 @@ class Router {
             $pattern = "#^".$route["path"]."$#";
 
             if(preg_match($pattern, $path, $variables) && $method == $route["method"]) {
-
                 foreach($route["middlewares"] as $middleware) {
                     $middleware = new $middleware;
                     $middleware->boot();
