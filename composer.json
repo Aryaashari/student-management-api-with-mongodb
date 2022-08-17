@@ -1,5 +1,5 @@
 {
-    "name": "aryaashari/simple-php-mvc-setup",
+    "name": "aryaashari/e-commerce",
     "type": "project",
     "authors": [
         {
@@ -12,14 +12,15 @@
     },
     "autoload": {
         "psr-4" : {
-            "App\\" : "app/app",
-            "Controller\\" : "app/controller",
-            "Middleware\\" : "app/middleware"
+            "E-Commerce\\App\\" : "app/app",
+            "E-Commerce\\Controller\\" : "app/controller",
+            "E-Commerce\\Middleware\\" : "app/middleware"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            
+            "E-Commerce\\App\\" : "test/app",
+            "E-Commerce\\Controller\\" : "test/controller"
         }
     },
     "require-dev": {
