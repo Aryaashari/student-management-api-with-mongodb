@@ -27,7 +27,7 @@ class ResponseApiFormatter {
         }
 
         header("Content-type: application/json");
-        echo json_encode(self::$response);
+        return json_encode(self::$response);
     }
 
     public static function Error(string $message, int $code = 500 , ?\Exception $error = null, ?array $customs = null) {
@@ -41,6 +41,7 @@ class ResponseApiFormatter {
             }
         }
 
+        header("Content-type: application/json");
         return json_encode(self::$response);
     }
 

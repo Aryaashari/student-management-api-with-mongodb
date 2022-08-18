@@ -57,14 +57,17 @@ class StudentService {
 
         try {
             // Validasi request
-            if (strlen($request->name) < 3 && strlen($request->name) > 50) {
+            if (strlen($request->name) < 3 || strlen($request->name) > 50) {
                 throw new ValidationException("Nama siswa minimal 3 dan maksimal 50 karakter", 422);
             }
 
-            if ($request->age == null || $request->age = "") {
+            
+            if ($request->age == null || $request->age == "") {
                 throw new ValidationException("Umur belum di isi", 422);
             } 
-
+            
+            // var_dump(is_int($request->age));
+            // exit();
             if (!is_int($request->age)) {
                 throw new ValidationException("Umur siswa harus integer", 422);
             }
