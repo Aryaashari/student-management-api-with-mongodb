@@ -2,6 +2,7 @@
 
 namespace Student\Management\Service;
 
+use Student\Management\Entity\Grade;
 use Student\Management\Exception\ValidationException;
 use Student\Management\Model\GradeRequest;
 use Student\Management\Model\GradeResponse;
@@ -55,7 +56,31 @@ class GradeService {
 
     }
 
-    // public function updateGrade(GradeRequest $request) : GradeResponse {}
+    public function updateGrade(GradeRequest $request) : GradeResponse {
+
+        try {
+
+            $grade = $this->gradeRepo->findById($request->id);
+            if (is_null($grade)) {
+                throw new ValidationException("Data grade tidak ditemukan");
+            }
+    
+            if (is_string($request->matematika) || is_string($request->bIndo) || is_string($request->bInggris)) {
+                throw new ValidationException("Semua data grade harus berupa angka");
+            }
+    
+            if (!($request->matematika > 0 && $request->matematika <= 100) || !($request->bIndo > 0 && $request->bIndo <= 100) || !($request->bInggris > 0 && $request->bInggris <= 100)) {
+                throw new ValidationException("Semua data grade harus dalam rentang 0-100");
+            }
+    
+            $newGrade = $this->gradeRepo->update(new Grade($request->id, $request->studentId, $request->matematika, $request->bIndo, $request->bInggris));
+            return new GradeResponse($newGrade->id, $newGrade->student_id, $newGrade->matematika, $newGrade->bIndo, $newGrade->bInggris, $newGrade->rata, $newGrade->total);
+        } catch(\Exception | ValidationException $e) {
+            throw $e;
+        }
+
+
+    }
 
     // public function deleteGrade(int $id) : bool {}
 

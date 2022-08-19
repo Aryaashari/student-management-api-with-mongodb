@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Student\Management\Config\Database;
 use Student\Management\Entity\Student;
 use Student\Management\Exception\ValidationException;
+use Student\Management\Model\GradeRequest;
 use Student\Management\Repository\GradeRepository;
 use Student\Management\Repository\StudentRepository;
 
@@ -73,6 +74,25 @@ class gradeServiceTest  extends TestCase {
         $grade = $this->gradeService->findGradeByStudentId(999);
 
         var_dump($grade);
+    }
+
+    public function testUpdateGradeSuccess() {
+        $student = $this->studentRepo->create(new Student(null, "Arya", 18, "L"));
+        $grade = $this->gradeService->findGradeByStudentId($student->id);
+        var_dump($grade);
+        $this->assertEquals(0, $grade->matematika);
+        $this->assertEquals(0, $grade->bIndo);
+        $this->assertEquals(0, $grade->bInggris);
+        $this->assertEquals(0, $grade->rata);
+        $this->assertEquals(0, $grade->total);
+
+        $grade = $this->gradeService->updateGrade(new GradeRequest($grade->id, $grade->studentId, 100, 100, 100));
+        var_dump($grade);
+        $this->assertEquals(100, $grade->matematika);
+        $this->assertEquals(100, $grade->bIndo);
+        $this->assertEquals(100, $grade->bInggris);
+        $this->assertEquals(100, $grade->rata);
+        $this->assertEquals(300, $grade->total);
     }
 
 }
