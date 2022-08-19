@@ -88,13 +88,18 @@ class StudentRepository {
 
     public function delete(int $id) : bool {
         try {
+            Database::startTransaction();
+            $grade = $this->gradeRepo->findByStudentId($id);
+            $this->gradeRepo->delete($grade->id);
 
             $stmt = $this->dbConn->prepare("DELETE  FROM student WHERE id=?");
             $stmt->execute([$id]);
 
+            Database::commitTransaction();
             return true;
 
         } catch(\Exception | \PDOException $e) {
+            Database::rollbackTransaction();
             throw $e;
         }
     }

@@ -85,7 +85,11 @@ class GradeService {
     public function deleteGrade(int $id) : bool {
 
         try {
-            
+            $grade = $this->gradeRepo->findById($id);
+            if (is_null($grade)) {
+                throw new ValidationException("Data grade tidak ditemukan");
+            }
+
             $this->gradeRepo->delete($id);
             return true;
         } catch(\Exception $e) {
