@@ -14,7 +14,24 @@ class GradeRepository {
         $this->dbConn = Database::getConnection();
     }
 
-    // public function findAll() : array {}
+    public function findAll() : array {
+
+        try {
+            
+            $stmt = $this->dbConn->query("SELECT id,student_id, matematika, bIndo, bInggris, rata, total FROM grade");
+            $grades = [];
+    
+            while($grade = $stmt->fetch()) {
+                $grades[] = new Grade($grade["id"], $grade["student_id"], $grade["matematika"], $grade["bIndo"], $grade["bInggris"], $grade["rata"], $grade["total"]);
+            }
+    
+            return $grades;
+
+        } catch(\Exception | \PDOException $e) {
+            throw $e;
+        }
+
+    }
 
     // public function findById(int $id) : ?Grade {}
 
