@@ -110,7 +110,7 @@ class GradeRepository {
 
         try {
 
-            $stmt = $this->dbConn->prepare("DELETE grade WHERE id=?");
+            $stmt = $this->dbConn->prepare("DELETE FROM grade WHERE id=?");
             $stmt->execute([$id]);
 
             return true;

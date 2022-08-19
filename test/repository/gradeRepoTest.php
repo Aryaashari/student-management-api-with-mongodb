@@ -74,6 +74,15 @@ class gradeRepoTest extends TestCase {
         // $this->assertEquals(300, $newGrade->total);
     }
 
+
+    public function testDeleteSuccess() {
+        $student = $this->studentRepo->create(new Student(null, "Arya Ashari", 19, "L"));
+        $grade = $this->gradeRepo->create(new Grade(null, $student->id));
+
+        $res = $this->gradeRepo->delete($grade->id);
+        $this->assertTrue($res);
+    }
+
     public function testError() {
         $this->expectException(\Exception::class);
         // $this->gradeRepo->findAll();
