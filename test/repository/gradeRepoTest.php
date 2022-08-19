@@ -48,8 +48,30 @@ class gradeRepoTest extends TestCase {
 
     public function testCreateSuccess() {
         $student = $this->studentRepo->create(new Student(null, "Arya Ashari", 19, "L"));
+        $grade = $this->gradeRepo->create(new Grade(null, $student->id, 80,87,90));
+        var_dump($grade);
+        $this->assertIsObject($grade);
+    }
+
+    public function testUpdateSuccess() {
+        $student = $this->studentRepo->create(new Student(null, "Arya Ashari", 19, "L"));
         $grade = $this->gradeRepo->create(new Grade(null, $student->id));
         $this->assertIsObject($grade);
+        var_dump($grade);
+        $this->assertEquals(0, $grade->matematika);
+        $this->assertEquals(0, $grade->bIndo);
+        $this->assertEquals(0, $grade->bInggris);
+        $this->assertEquals(0, $grade->rata);
+        $this->assertEquals(0, $grade->total);
+        
+        $newGrade = $this->gradeRepo->update(new Grade($grade->id, $grade->student_id, 67, 86, 38));
+        $this->assertIsObject($newGrade);
+        var_dump($newGrade);
+        // $this->assertEquals(100, $newGrade->matematika);
+        // $this->assertEquals(100, $newGrade->bIndo);
+        // $this->assertEquals(100, $newGrade->bInggris);
+        // $this->assertEquals(100, $newGrade->rata);
+        // $this->assertEquals(300, $newGrade->total);
     }
 
     public function testError() {

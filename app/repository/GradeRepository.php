@@ -75,6 +75,8 @@ class GradeRepository {
         try {
 
             $stmt = $this->dbConn->prepare("INSERT INTO grade(student_id, matematika, bIndo, bInggris, rata, total) VALUES(?,?,?,?,?,?)");
+            $grade->rata = $grade->getRata();
+            $grade->total = $grade->getTotal();
             $stmt->execute([$grade->student_id, $grade->matematika, $grade->bIndo, $grade->bInggris, $grade->rata, $grade->total]);
 
             $grade->id = $this->dbConn->lastInsertId();
@@ -87,9 +89,37 @@ class GradeRepository {
 
     }
 
-    // public function update(Grade $grade) : Grade {}
+    public function update(Grade $grade) : Grade {
 
-    // public function delete(int $id) : bool {}
+        try {
+
+            $stmt = $this->dbConn->prepare("UPDATE grade SET matematika=?, bIndo=?, bInggris=?, rata=?, total=? WHERE id=?");
+            $grade->rata = $grade->getRata();
+            $grade->total = $grade->getTotal();
+            $stmt->execute([$grade->matematika, $grade->bIndo, $grade->bInggris, $grade->rata, $grade->total, $grade->id]);
+
+            return $grade;
+
+        } catch(\Exception | \PDOException $e) {
+            throw $e;
+        }
+
+    }
+
+    public function delete(int $id) : bool {
+
+        try {
+
+            $stmt = $this->dbConn->prepare("DELETE grade WHERE id=?");
+            $stmt->execute([$id]);
+
+            return true;
+
+        } catch(\Exception | \PDOException $e) {
+            throw $e;
+        }
+
+    }
 
 
     public function deleteAllData() : void {
