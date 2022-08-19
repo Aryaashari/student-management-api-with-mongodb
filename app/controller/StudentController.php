@@ -71,17 +71,59 @@ class StudentController {
                 "gender" => $student->gender,
             ]);
         } catch(ValidationException $e) {
-            echo ResponseApiFormatter::Error($e->getMessage(), 422);
+            echo ResponseApiFormatter::Error($e->getMessage(), 400);
         } catch(\Exception $e) {
             echo ResponseApiFormatter::Error("Sistem bermasalah", 500, $e);
         }
 
     }
 
-    public function updateStudent() {
+    public function updateStudent($id) {
+        // var_dump($_SERVER);
+        // exit();
+        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        if (isset($input["name"])) {
+            $name = htmlspecialchars(trim($input["name"]));
+        } else {
+            $name = "";
+        }
+        
+        if (isset($input["age"])) {
+            $age = htmlspecialchars(trim($input["age"]));
+        } else {
+            $age = "";
+        }
+
+        if (isset($input["gender"])) {
+            $gender = htmlspecialchars(trim($input["gender"]));
+        } else {
+            $gender = "";
+        }
+
+        try {
+            $this->studentService->findStudentById($id);
+
+            $request = new StudentRequest($name, (int)$age, $gender, $id);
+
+            $response = $this->studentService->updateStudent($request);
+
+            echo ResponseApiFormatter::Success("Berhasil edit data siswa", [
+                "id" => $response->id,
+                "name" => $response->name,
+                "age" => $response->age,
+                "gender" => $response->gender
+            ]);
+        } catch(ValidationException $e) {
+            echo ResponseApiFormatter::Error($e->getMessage(), 400);
+        } catch(\Exception $e) {
+            echo ResponseApiFormatter::Error("Sistem bermasalah", 500, $e);
+        }
+
+
     }
 
-    public function deleteStudent() {
-    }
+    // public function deleteStudent() {
+    // }
 
 }

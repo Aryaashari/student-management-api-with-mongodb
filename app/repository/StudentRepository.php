@@ -67,7 +67,8 @@ class StudentRepository {
         try {
             $stmt = $this->dbConn->prepare("UPDATE student SET name=?, age=?, gender=? WHERE id=?");
             $stmt->execute([$student->name, $student->age, $student->gender, $student->id]);
-
+            // var_dump($student);
+            // exit();
             return $student;
         } catch (\Exception | \PDOException $e) {
             throw $e;

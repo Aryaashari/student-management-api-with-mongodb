@@ -42,6 +42,7 @@ class ResponseApiFormatter {
         }
 
         header("Content-type: application/json");
+        http_response_code($code);
         return json_encode(self::$response);
     }
 
