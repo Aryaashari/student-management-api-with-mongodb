@@ -2,15 +2,19 @@
 
 namespace Student\Management\Repository;
 
+use Student\Management\Config\Database;
+use Student\Management\Entity\Grade;
 use Student\Management\Entity\Student;
 
 class StudentRepository {
     
     private \PDO $dbConn;
+    private GradeRepository $gradeRepo;
 
     public function __construct(\PDO $db)
     {
         $this->dbConn = $db;
+        $this->gradeRepo = new GradeRepository;
     }
 
 
@@ -51,12 +55,18 @@ class StudentRepository {
     public function create(Student $student) : Student {
 
         try {
+            Database::startTransaction();
             $stmt = $this->dbConn->prepare("INSERT INTO student(name,age,gender) VALUES (?,?,?)");
             $stmt->execute([$student->name, $student->age, $student->gender]);
             $id = $this->dbConn->lastInsertId();
             $student->id = $id;
+
+            $this->gradeRepo->create(new Grade(null, $id));
+            Database::commitTransaction();
+
             return $student;
         } catch(\Exception | \PDOException $e) {
+            Database::rollbackTransaction();
             throw $e;
         }
 
