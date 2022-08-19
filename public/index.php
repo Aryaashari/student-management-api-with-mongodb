@@ -9,7 +9,7 @@ use Student\Management\Controller\StudentController;
 Router::add("GET", "/", HomeController::class, 'index', []);
 
 Database::getConnection("production");
-// Book Controller
+// Student Controller
 Router::add("GET", "/api/student", StudentController::class, 'getStudent', []);
 Router::add("POST", "/api/student", StudentController::class, 'createStudent', []);
 Router::add("PUT", "/api/student/([0-9]*)", StudentController::class, 'updateStudent', []);
