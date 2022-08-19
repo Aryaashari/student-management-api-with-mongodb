@@ -123,7 +123,17 @@ class StudentController {
 
     }
 
-    // public function deleteStudent() {
-    // }
+    public function deleteStudent($id) {
+
+        try {
+            $this->studentService->deleteStudent($id);
+            echo ResponseApiFormatter::Success("Berhasil hapus data siswa");
+        } catch(ValidationException $e) {
+            echo ResponseApiFormatter::Error($e->getMessage(), 400);
+        } catch(\Exception $e) {
+            echo ResponseApiFormatter::Error("Sistem bermasalah", 500, $e);
+        }
+
+    }
 
 }
