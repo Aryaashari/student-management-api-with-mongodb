@@ -27,11 +27,11 @@ class gradeServiceTest  extends TestCase {
         $this->assertEmpty($grades);
     }
 
-    // public function testFindAllGradeNotEmpty() {
-    //     $student = $this->studentRepo->create(new Student(null, "Arya", 18, "L"));
-    //     $grades = $this->gradeService->findAllGrade();
-    //     $this->assertIsArray($grades);
-    //     $this->assertTrue(count($grades) > 0);
-    // }
+    public function testFindAllGradeNotEmpty() {
+        $student = $this->studentRepo->create(new Student(null, "Arya", 18, "L"));
+        $grades = $this->gradeService->findAllGrade();
+        $this->assertIsArray($grades);
+        $this->assertTrue(count($grades) > 0);
+    }
 
 }
