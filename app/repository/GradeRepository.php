@@ -33,7 +33,24 @@ class GradeRepository {
 
     }
 
-    // public function findById(int $id) : ?Grade {}
+    public function findById(int $id) : ?Grade {
+
+        try {
+
+            $stmt = $this->dbConn->prepare("SELECT id,student_id, matematika, bIndo, bInggris, rata, total FROM grade WHERE id=?");
+            $stmt->execute([$id]);
+    
+            if ($grade = $stmt->fetch()) {
+                return new Grade($grade["id"], $grade["student_id"], $grade["matematika"], $grade["bIndo"], $grade["bInggris"], $grade["rata"], $grade["total"]);
+            }
+    
+            return null;
+        } catch(\Exception | \PDOException $e) {
+            throw $e;
+        }
+
+
+    }
 
     // public function findByStudentId(int $studentId) : ?Grade {}
 
@@ -42,6 +59,11 @@ class GradeRepository {
     // public function update(Grade $grade) : Grade {}
 
     // public function delete(int $id) : bool {}
+
+
+    public function deleteAllData() : void {
+        $this->dbConn->query("DELETE FROM grade");
+    }
 
 
 }
