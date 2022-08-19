@@ -82,6 +82,16 @@ class GradeService {
 
     }
 
-    // public function deleteGrade(int $id) : bool {}
+    public function deleteGrade(int $id) : bool {
+
+        try {
+            
+            $this->gradeRepo->delete($id);
+            return true;
+        } catch(\Exception $e) {
+            throw $e;
+        }
+
+    }
 
 }

@@ -95,4 +95,19 @@ class gradeServiceTest  extends TestCase {
         $this->assertEquals(300, $grade->total);
     }
 
+    public function testDeleteSuccess() {
+        $student = $this->studentRepo->create(new Student(null, "Arya", 18, "L"));
+        $student2 = $this->studentRepo->create(new Student(null, "Fitrah", 18, "L"));
+        $grade = $this->gradeService->findGradeByStudentId($student->id);
+        var_dump($grade);
+        $this->assertEquals(0, $grade->matematika);
+        $this->assertEquals(0, $grade->bIndo);
+        $this->assertEquals(0, $grade->bInggris);
+        $this->assertEquals(0, $grade->rata);
+        $this->assertEquals(0, $grade->total);
+
+        $res = $this->gradeService->deleteGrade($grade->id);
+        $this->assertTrue($res);
+    }
+
 }
