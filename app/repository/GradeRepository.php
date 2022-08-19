@@ -52,7 +52,23 @@ class GradeRepository {
 
     }
 
-    // public function findByStudentId(int $studentId) : ?Grade {}
+    public function findByStudentId(int $studentId) : ?Grade {
+
+        try {
+
+            $stmt = $this->dbConn->prepare("SELECT id,student_id, matematika, bIndo, bInggris, rata, total FROM grade WHERE student_id=?");
+            $stmt->execute([$studentId]);
+    
+            if ($grade = $stmt->fetch()) {
+                return new Grade($grade["id"], $grade["student_id"], $grade["matematika"], $grade["bIndo"], $grade["bInggris"], $grade["rata"], $grade["total"]);
+            }
+    
+            return null;
+        } catch(\Exception | \PDOException $e) {
+            throw $e;
+        }
+
+    }
 
     // public function create(Grade $grade) : Grade {}
 

@@ -31,6 +31,16 @@ class gradeRepoTest extends TestCase {
         $this->assertNotNull($grade);
     }
 
+    public function testFindByStudentIdNotFound() {
+        $grade = $this->gradeRepo->findByStudentId(1);
+        $this->assertNull($grade);
+    }
+
+    public function testFindByStudentIdFound() {
+        $grade = $this->gradeRepo->findByStudentId(23);
+        $this->assertNotNull($grade);
+    }
+
     public function testError() {
         $this->expectException(\Exception::class);
         // $this->gradeRepo->findAll();
