@@ -70,7 +70,22 @@ class GradeRepository {
 
     }
 
-    // public function create(Grade $grade) : Grade {}
+    public function create(Grade $grade) : Grade {
+
+        try {
+
+            $stmt = $this->dbConn->prepare("INSERT INTO grade(student_id, matematika, bIndo, bInggris, rata, total) VALUES(?,?,?,?,?,?)");
+            $stmt->execute([$grade->student_id, $grade->matematika, $grade->bIndo, $grade->bInggris, $grade->rata, $grade->total]);
+
+            $grade->id = $this->dbConn->lastInsertId();
+
+            return $grade;
+
+        } catch(\Exception | \PDOException $e) {
+            throw $e;
+        }
+
+    }
 
     // public function update(Grade $grade) : Grade {}
 
