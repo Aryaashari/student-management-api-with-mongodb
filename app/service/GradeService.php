@@ -38,7 +38,22 @@ class GradeService {
         }
     }
 
-    // public function findGradeByStudentId(int $studentId) : GradeResponse {}
+    public function findGradeByStudentId(int $studentId) : GradeResponse {
+
+        try {
+
+            $grade = $this->gradeRepo->findByStudentId($studentId);
+            if (is_null($grade)) {
+                throw new ValidationException("Data grade tidak ditemukan");
+            }
+    
+            return new GradeResponse($grade->id, $grade->student_id, $grade->matematika, $grade->bIndo, $grade->bInggris, $grade->rata, $grade->total);
+        } catch(\Exception | ValidationException $e) {
+            throw $e;
+        }
+
+
+    }
 
     // public function updateGrade(GradeRequest $request) : GradeResponse {}
 

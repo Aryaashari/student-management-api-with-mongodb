@@ -41,11 +41,13 @@ class gradeServiceTest  extends TestCase {
         $grades = $this->gradeService->findAllGrade();
         $grade = null;
         foreach($grades as $grade) {
-            if ($student->id == $grade->id) {
-                $grade = $this->gradeService->findGradeById($student->id);
+            if ($student->id == $grade->student_id) {
+                $grade = $this->gradeService->findGradeById($grade->id);
                 break;
             }
         }
+
+        var_dump($grade);
         
         $this->assertIsObject($grade);
     }
@@ -54,6 +56,23 @@ class gradeServiceTest  extends TestCase {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage("Data grade tidak ditemukan");
         $grade = $this->gradeService->findGradeById(9999);
+    }
+
+    public function testFindGradeByStudentIdFound() {
+        $student = $this->studentRepo->create(new Student(null, "Arya", 18, "L"));
+        $grade = $this->gradeService->findGradeByStudentId($student->id);
+
+        var_dump($grade);
+        
+        $this->assertIsObject($grade);
+    }
+
+    public function testFindGradeByStudentIdNotFound() {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage("Data grade tidak ditemukan");
+        $grade = $this->gradeService->findGradeByStudentId(999);
+
+        var_dump($grade);
     }
 
 }
