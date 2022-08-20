@@ -3,6 +3,7 @@
 namespace Student\Management\Controller;
 
 use Student\Management\Config\Database;
+use Student\Management\Exception\ValidationException;
 use Student\Management\Helper\ResponseApiFormatter;
 use Student\Management\Repository\GradeRepository;
 use Student\Management\Repository\StudentRepository;
@@ -53,7 +54,35 @@ class GradeController {
     }
 
     public function findDetailGrade(int $id) : void {
+
+        try {
+
+            $grade = $this->gradeService->findGradeById($id);
+            $student = $this->studentService->findStudentById($grade->studentId);
+            $response = [
+                "id" => $grade->id,
+                "student_id" => $grade->studentId,
+                "matematiika" => $grade->matematika,
+                "bIndo" => $grade->bIndo,
+                "bInggris" => $grade->bInggris,
+                "rata" => $grade->rata,
+                "total" => $grade->total,
+                "student" => [
+                    "id" => $student->id,
+                    "name" => $student->name,
+                    "age" => $student->age,
+                    "gender" => $student->gender,
+                ]
+            ];
+    
+            echo ResponseApiFormatter::Success("Berhasil ambil detail data grade", $response);
+        } catch(ValidationException $e) {
+            echo ResponseApiFormatter::Error($e->getMessage(), 404);
+        } catch(\Exception $e) {
+            echo ResponseApiFormatter::Error("Sistem bermasalah",500,$e);
+        }
         
+
     }
 
     public function createGrade() : void {}
