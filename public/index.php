@@ -23,6 +23,6 @@ Router::add("GET", "/api/grade", GradeController::class, "findAllGrade", []);
 Router::add("GET", "/api/grade/([0-9]*)", GradeController::class, "findDetailGrade", []);
 // Router::add("POST", "/api/grade", GradeController::class, "createGrade", []);
 Router::add("PUT", "/api/grade/([0-9]*)", GradeController::class, "updateGrade", []);
-Router::add("DELETE", "/api/grade/([0-9]*)", GradeController::class, "deleteGrade", []);
+// Router::add("DELETE", "/api/grade/([0-9]*)", GradeController::class, "deleteGrade", []);
 
 Router::run();

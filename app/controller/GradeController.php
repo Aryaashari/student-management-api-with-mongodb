@@ -141,6 +141,4 @@ class GradeController {
 
     }
 
-    public function deleteGrade() : void {}
-
 }
