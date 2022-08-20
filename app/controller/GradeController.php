@@ -5,6 +5,7 @@ namespace Student\Management\Controller;
 use Student\Management\Config\Database;
 use Student\Management\Exception\ValidationException;
 use Student\Management\Helper\ResponseApiFormatter;
+use Student\Management\Model\GradeRequest;
 use Student\Management\Repository\GradeRepository;
 use Student\Management\Repository\StudentRepository;
 use Student\Management\Service\GradeService;
@@ -85,9 +86,60 @@ class GradeController {
 
     }
 
-    public function createGrade() : void {}
+    public function updateGrade(int $id) : void {
 
-    public function updateGrade() : void {}
+        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+
+        if (isset($input["matematika"])) {
+            $matematika = htmlspecialchars(trim($input["matematika"]));
+        } else {
+            $matematika = "";
+        }
+
+        if (isset($input["bIndo"])) {
+            $bIndo = htmlspecialchars(trim($input["bIndo"]));
+        } else {
+            $bIndo = "";
+        }
+
+        if (isset($input["bInggris"])) {
+            $bInggris = htmlspecialchars(trim($input["bInggris"]));
+        } else {
+            $bInggris = "";
+        }
+
+        $request = new GradeRequest($id, null, (int)$matematika, (int)$bIndo, (int)$bInggris);
+
+        try {
+
+            $newGrade = $this->gradeService->updateGrade($request);
+            $student = $this->studentService->findStudentById($newGrade->studentId);
+            $response = [
+                "id" => $newGrade->id,
+                "student_id" => $newGrade->studentId,
+                "matematiika" => $newGrade->matematika,
+                "bIndo" => $newGrade->bIndo,
+                "bInggris" => $newGrade->bInggris,
+                "rata" => $newGrade->rata,
+                "total" => $newGrade->total,
+                "student" => [
+                    "id" => $student->id,
+                    "name" => $student->name,
+                    "age" => $student->age,
+                    "gender" => $student->gender,
+                ]
+            ];
+    
+            echo ResponseApiFormatter::Success("Berhasil update data grade", $response);
+        } catch(ValidationException $e) {
+            echo ResponseApiFormatter::Error($e->getMessage(), 400);
+        } catch(\Exception $e) {
+            echo ResponseApiFormatter::Error("Sistem bermasalah",500,$e);
+        }
+
+
+
+    }
 
     public function deleteGrade() : void {}
 

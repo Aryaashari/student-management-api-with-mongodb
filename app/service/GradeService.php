@@ -2,19 +2,23 @@
 
 namespace Student\Management\Service;
 
+use Student\Management\Config\Database;
 use Student\Management\Entity\Grade;
 use Student\Management\Exception\ValidationException;
 use Student\Management\Model\GradeRequest;
 use Student\Management\Model\GradeResponse;
 use Student\Management\Repository\GradeRepository;
+use Student\Management\Repository\StudentRepository;
 
 class GradeService {
 
     private GradeRepository $gradeRepo;
+    private StudentRepository $studentRepository;
 
     public function __construct(GradeRepository $gradeRepo)
     {
         $this->gradeRepo = $gradeRepo;
+        $this->studentRepository = new StudentRepository(Database::getConnection());
     }
 
     public function findAllGrade() : array {
@@ -73,7 +77,8 @@ class GradeService {
                 throw new ValidationException("Semua data grade harus dalam rentang 0-100");
             }
     
-            $newGrade = $this->gradeRepo->update(new Grade($request->id, $request->studentId, $request->matematika, $request->bIndo, $request->bInggris));
+            $newGrade = $this->gradeRepo->update(new Grade($request->id, $grade->student_id, $request->matematika, $request->bIndo, $request->bInggris));
+
             return new GradeResponse($newGrade->id, $newGrade->student_id, $newGrade->matematika, $newGrade->bIndo, $newGrade->bInggris, $newGrade->rata, $newGrade->total);
         } catch(\Exception | ValidationException $e) {
             throw $e;
