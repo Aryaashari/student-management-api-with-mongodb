@@ -2,32 +2,59 @@
 
 namespace Student\Management\Controller;
 
+use Student\Management\Config\Database;
 use Student\Management\Helper\ResponseApiFormatter;
 use Student\Management\Repository\GradeRepository;
+use Student\Management\Repository\StudentRepository;
 use Student\Management\Service\GradeService;
+use Student\Management\Service\StudentService;
 
 class GradeController {
 
     private GradeService $gradeService;
+    private StudentService $studentService;
 
     public function __construct()
     {
         $this->gradeService = new GradeService(new GradeRepository);
+        $this->studentService = new StudentService(new StudentRepository(Database::getConnection()));
     }
 
     public function findAllGrade() : void {
 
         try {
-            
             $grades = $this->gradeService->findAllGrade();
-            echo ResponseApiFormatter::Success("Berhasil ambil semua data grade", $grades);
+
+            $response = [];
+            foreach($grades as $grade) {
+                $student = $this->studentService->findStudentById($grade->student_id);
+                $response[] = [
+                    "id" => $grade->id,
+                    "student_id" => $grade->student_id,
+                    "matematiika" => $grade->matematika,
+                    "bIndo" => $grade->bIndo,
+                    "bInggris" => $grade->bInggris,
+                    "rata" => $grade->rata,
+                    "total" => $grade->total,
+                    "student" => [
+                        "id" => $student->id,
+                        "name" => $student->name,
+                        "age" => $student->age,
+                        "gender" => $student->gender,
+                    ]
+                ];
+            }
+
+            echo ResponseApiFormatter::Success("Berhasil ambil semua data grade", $response);
         } catch(\Exception $e) {
             echo ResponseApiFormatter::Error("Sistem bermasalah",500,$e);
         }
 
     }
 
-    public function findDetailGrade(int $id) : void {}
+    public function findDetailGrade(int $id) : void {
+        
+    }
 
     public function createGrade() : void {}
 
