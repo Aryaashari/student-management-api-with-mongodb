@@ -16,4 +16,16 @@ class databaseTest extends TestCase {
 
     }
 
+    public function testConnectionMongo() {
+        $db = Database::getConnection("test", "mongodb");
+        $collections = $db->student->find();
+        $students = [];
+        foreach($collections as $student) {
+            $students[] = $student;
+        }
+        
+        var_dump($students);
+        $this->assertNotNull($db);
+    }
+
 }

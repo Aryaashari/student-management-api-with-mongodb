@@ -5,6 +5,7 @@ namespace Student\Management\Config;
 class Database {
 
     private static ?\PDO $db = null;
+    private static ?\MongoDB\Database $mongoDB = null;
 
     private static function getEnv(string $env = "test", string $dbType = "mysql") : array {
 
@@ -20,20 +21,43 @@ class Database {
                     "username" => "root",
                     "password" => ""
                 ]
+            ],
+            "mongodb" => [
+                "test" => [
+                    "url" => "mongodb://localhost:27017",
+                    "dbName" => "test"
+                ],
+                "production" => [
+                    "url" => "mongodb://localhost:27017",
+                    "dbName" => "student_management"
+                ]
             ]
+
         ];
 
         return $setting[$dbType][$env];
     }
 
-    public static function getConnection($env = "test", $dbType = "mysql") : \PDO {
+    public static function getConnection($env = "test", $dbType = "mysql") : \PDO|\MongoDB\Database {
 
-        if (is_null(self::$db)) {
-            $env = self::getEnv($env, $dbType);
-            self::$db = new \PDO($env["url"], $env["username"], $env["password"]);
+        if ($dbType === "mysql") {
+            if (is_null(self::$db)) {
+                $env = self::getEnv($env, $dbType);
+                self::$db = new \PDO($env["url"], $env["username"], $env["password"]);
+            }
+            return self::$db;
+        } else if ($dbType === "mongodb") {
+            if (is_null(self::$mongoDB)) {
+                $env = self::getEnv($env, $dbType);
+                $client = new \MongoDB\Client($env["url"]);
+                $dbName = $env["dbName"];
+
+                self::$mongoDB = $client->$dbName;
+            }
+            return self::$mongoDB;
         }
 
-        return self::$db;
+        
 
     }
 
